@@ -26,14 +26,14 @@ class Game {
 /** makeBoard: create in-JS board structure:
  *   board = array of rows, each row is array of cells  (board[y][x])
  */
-
+  
 makeBoard() {
   this.board = [];
   for (let y = 0; y < this.height; y++) {
     this.board.push(Array.from({ length: this.width }));
   }
-}
-
+}  
+  
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
 makeHtmlBoard() {
@@ -118,7 +118,7 @@ handleClick(evt) {
   // check for win
   if (this.checkForWin()) {
     this.gameOver = true;
-    return this.endGame(`Player ${this.currPlayer.color} won!`); 
+    return this.endGame(`${this.currPlayer.color} won!`); 
   }
   
   // check for tie
@@ -138,7 +138,7 @@ checkForWin() {
     //  - cells: list of four (y, x) cells
     //  - returns true if all are legal coordinates & all match currPlayer
 
-      cells.every(
+    return cells.every(
       ([y, x]) =>
         y >= 0 &&
         y < this.height &&
@@ -170,8 +170,16 @@ class Player {
     this.color = color;
   }
 }
+
+const clearText = () => {
+  document.getElementById('p1-color').value = '';
+  document.getElementById('p2-color').value = '';
+};
+
+
+
 document.getElementById('start-game').addEventListener('click', () => {
-  let p1 = new Player(document.getElementById('p1-color').value);
-  let p2 = new Player(document.getElementById('p2-color').value);
+  let p1 = new Player(document.getElementById('p1-color').value || 'red');
+  let p2 = new Player(document.getElementById('p2-color').value || 'blue');
   new Game(p1, p2);
 });
